@@ -30,7 +30,7 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
         mHolder.addCallback(this);
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         
-        camera = openFrontFacingCamera();
+        camera = openPrimaryCamera();
         camera.setDisplayOrientation(90);
     }
 
@@ -102,6 +102,23 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
 		return cam;
 	}
     
+    
+    private Camera openPrimaryCamera() {
+		//int cameraCount = 0;
+		Camera cam = null;
+		Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+		//cameraCount = Camera.getNumberOfCameras();
+		
+				try {
+					cam = Camera.open();
+				} catch (RuntimeException e) {
+					Log.e(TAG,
+							"Camera failed to open: " + e.getLocalizedMessage());
+				
+		}
+
+		return cam;
+	}
     @Override
     public void draw(Canvas canvas) {
     		super.draw(canvas);
